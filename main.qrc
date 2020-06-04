@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/toolbar/cube.png</file>
+        <file>images/toolbar/sphere.png</file>
+        <file>images/toolbar/rect.png</file>
+        <file>images/toolbar/shift.png</file>
+    </qresource>
+</RCC>
