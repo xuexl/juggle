@@ -33,15 +33,16 @@ private:
     QAction *createPlaneClippingAction;
         
     QToolBar *modelInteractorToolBar;
-    QAction *shiftInteractorStyleAction;
+    QAction *shiftInteractorStyleAction;    
     
     void initToolBar();
     
     enum basicGeometries{G_SPHERE, G_CUBE};
     void createBasicGeometries(basicGeometries);
     
-    enum clippingTools{C_PLANE};
-    void createClipping(clippingTools);
+    enum clippingTools{C_NONE, C_PLANE};
+    void createClipping(bool, clippingTools);
+    clippingTools currentClippingTool;
     
     void shiftInteractorStyle(bool);
     
