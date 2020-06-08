@@ -87,7 +87,7 @@ void MainWindow::initView()
     vtkNew<vtkRenderer> renderer; 
     renderer->SetBackground(colors->GetColor3d("SlateGray").GetData());
     renderWindow->AddRenderer(renderer);
-
+    
     vtkNew<vtkAxesActor> axes;
     vtkNew<vtkOrientationMarkerWidget> widget ;
     double rgba[4]{0.0, 0.0, 0.0, 0.0};
@@ -95,16 +95,14 @@ void MainWindow::initView()
     widget->SetOutlineColor(rgba[0], rgba[1], rgba[2]);
     widget->SetOrientationMarker( axes );
     widget->SetInteractor(renderWindow->GetInteractor());
-    widget->SetViewport( 0.0, 0.0, 0.6, 0.6 );
+//    widget->SetViewport( 0.0, 0.0, 0.6, 0.6 );
     widget->SetEnabled(1);
     widget->InteractiveOn();
     
     renderer->ResetCamera();
+//    renderer->AddActor(axes);
     
-//    vtkNew<MainCommon> mc;   
-//    mc->renderer = renderer;
-    
-//    renderWindow->GetInteractor()->AddObserver(vtkCommand::LeftButtonPressEvent, mc);    
+
 }
 
 void MainWindow::createBasicGeometries(basicGeometries ge)
