@@ -4,6 +4,9 @@
 #include <QMainWindow>
 #include<QToolBar>
 
+#include<vtkSmartPointer.h>
+
+
 #include"maintreewidget.h"
 
 
@@ -42,14 +45,14 @@ private:
     
     enum clippingTools{C_NONE, C_PLANE};
     void createClipping(bool, clippingTools);
-    clippingTools currentClippingTool;
+    clippingTools currentClippingTool;    
     
     void shiftInteractorStyle(bool);
     
 private:
     void initView();
     MainTreeWidget *mtw;
-    void initPipelineBrower();
+    void apply();
     
 };
 #endif // MAINWINDOW_H

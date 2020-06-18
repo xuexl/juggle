@@ -38,7 +38,9 @@ MainWindow::MainWindow(QWidget *parent)
     initToolBar();
     
     initView();
-    initPipelineBrower();
+
+    //
+    connect(ui->pb_apply, SIGNAL(clicked()), this, SLOT(apply()));
 }
 
 MainWindow::~MainWindow()
@@ -95,9 +97,9 @@ void MainWindow::initView()
     widget->SetOutlineColor(rgba[0], rgba[1], rgba[2]);
     widget->SetOrientationMarker( axes );
     widget->SetInteractor(renderWindow->GetInteractor());
-//    widget->SetViewport( 0.0, 0.0, 0.6, 0.6 );
-    widget->SetEnabled(1);
-    widget->InteractiveOn();
+    widget->SetViewport( 0.0, 0.0, 0.6, 0.6 );
+    widget->SetEnabled(0);
+    widget->InteractiveOff();
     
     renderer->ResetCamera();
 //    renderer->AddActor(axes);
@@ -138,10 +140,14 @@ void MainWindow::createBasicGeometries(basicGeometries ge)
     }     
 }
 
-void MainWindow::initPipelineBrower()
+void MainWindow::apply()
 {
-    
-    
+    if(currentClippingTool != C_NONE)
+    {
+        //clip  ??
+        
+        
+    }    
 }
 
 void MainWindow::createClipping(bool check, clippingTools ct)
