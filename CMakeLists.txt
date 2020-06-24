@@ -23,7 +23,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
 
 file(GLOB UI_FILES *.ui)
 file(GLOB QT_WRAP *.h)
-file(GLOB CXX_FILES *.cpp)
+file(GLOB CXX_FILES *.cxx)
 file(GLOB QRC_FILES *.qrc)
 
 qt5_wrap_ui(UISrcs ${UI_FILES})

@@ -7,6 +7,12 @@
 #include<vtkFieldData.h>
 #include<vtkMapper.h>
 #include<vtkCamera.h>
+#include <vtkRenderWindow.h>
+#include <vtkRenderWindowInteractor.h>
+#include <vtkNamedColors.h>
+
+
+#include"JuggleLog.h"
 
 
 vtkStandardNewMacro(vtkJuggleRenderer);
@@ -20,13 +26,26 @@ void vtkJuggleRenderer::ReleaseGraphicsResources(vtkWindow* w)
 }
 
 //----------------------------------------------------------------------------
-void vtkJuggleRenderer::Initialize()
+void vtkJuggleRenderer::Initialize(const JuggleOptions& options)
 {
+    if (!this->RenderWindow)
+    {
+      JuggleLog::Print(JuggleLog::Severity::Error, "No render window linked");
+      return;
+    }    
     
     this->RemoveAllViewProps();
     this->RemoveAllLights();
     
+    this->Options = options;        
+    this->AxisVisible = this->Options.Axis;
     
+    
+    this->SetBackground(options.BackgroundColor.data());
+    
+    this->InitializeCamera();    
+    
+    this->ShowAxis(true);
 }
 
 //----------------------------------------------------------------------------
@@ -79,6 +98,34 @@ std::string vtkJuggleRenderer::GenerateMetaDataDescription()
 }
 
 //----------------------------------------------------------------------------
+void vtkJuggleRenderer::ShowAxis(bool show)
+{
+  if (show)
+  {
+    vtkNew<vtkAxesActor> axes;
+    this->AxisWidget = vtkSmartPointer<vtkOrientationMarkerWidget>::New();
+    this->AxisWidget->SetOrientationMarker(axes);
+    this->AxisWidget->SetInteractor(this->RenderWindow->GetInteractor());
+    this->AxisWidget->SetViewport(0.85, 0.0, 1.0, 0.15);
+    this->AxisWidget->On();
+    this->AxisWidget->InteractiveOff();
+    this->AxisWidget->SetKeyPressActivation(false);
+  }
+  else
+  {
+    this->AxisWidget = nullptr;
+  }
+
+  this->AxisVisible = show;
+}
+
+//----------------------------------------------------------------------------
+bool vtkJuggleRenderer::IsAxisVisible()
+{
+  return this->AxisVisible;
+}
+
+//----------------------------------------------------------------------------
 void vtkJuggleRenderer::Render()
 {
  
@@ -87,9 +134,33 @@ void vtkJuggleRenderer::Render()
 }
 
 //----------------------------------------------------------------------------
+void vtkJuggleRenderer::InitializeCamera()
+{
+    this->Superclass::ResetCamera();
+    vtkCamera* cam = this->GetActiveCamera();
+    if (this->Options.CameraPosition.size() == 3)
+    {
+        cam->SetPosition(this->Options.CameraPosition.data());
+    }
+    if (this->Options.CameraFocalPoint.size() == 3)
+    {
+        cam->SetFocalPoint(this->Options.CameraFocalPoint.data());
+    }
+    if (this->Options.CameraViewUp.size() == 3)
+    {
+        cam->SetViewUp(this->Options.CameraViewUp.data());
+    }
+    if (this->Options.CameraViewAngle != 0)
+    {
+        cam->SetViewAngle(this->Options.CameraViewAngle);
+    }
+    cam->OrthogonalizeViewUp();
+}
+
+//----------------------------------------------------------------------------
 void vtkJuggleRenderer::ResetCamera()
 {
-  vtkCamera* cam = this->GetActiveCamera();
-  cam->DeepCopy(this->InitialCamera);
-  cam->Modified();
+    vtkCamera* cam = this->GetActiveCamera();
+    cam->DeepCopy(this->InitialCamera);
+    cam->Modified();
 }

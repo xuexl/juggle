@@ -4,11 +4,13 @@
 #include <QMainWindow>
 #include<QToolBar>
 
+#include<memory>
+
 #include<vtkSmartPointer.h>
 
-
 #include"maintreewidget.h"
-
+#include"vtkjugglerenderer.h"
+#include"JuggleLoader.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -40,8 +42,7 @@ private:
     
     void initToolBar();
     
-    enum basicGeometries{G_SPHERE, G_CUBE};
-    void createBasicGeometries(basicGeometries);
+    void createBasicGeometries(JuggleLoader::BasicGeometries ge);
     
     enum clippingTools{C_NONE, C_PLANE};
     void createClipping(bool, clippingTools);
@@ -53,6 +54,14 @@ private:
     void initView();
     MainTreeWidget *mtw;
     void apply();
+    
+    vtkSmartPointer<vtkJuggleRenderer> Renderer;
+    JuggleOptionsParser Parser;
+    std::unique_ptr<JuggleLoader> loader;
+    
+private:
+    MainWindow(MainWindow const&) = delete;
+    void operator=(MainWindow const&) = delete;
     
 };
 #endif // MAINWINDOW_H
