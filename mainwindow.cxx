@@ -68,7 +68,7 @@ void MainWindow::initToolBar()
     implicitFunctionsToolBar = addToolBar(tr(u8"切割工具"));
     
     createPlaneClippingAction = new QAction(QIcon("://images/toolbar/rect.png"), tr(u8"平面切割"), this);
-    connect(createPlaneClippingAction, &QAction::triggered, [this](bool check){ createClipping(check, C_PLANE); });
+    connect(createPlaneClippingAction, &QAction::triggered, [this](bool check){ createClipping(check); });
     implicitFunctionsToolBar->addAction(createPlaneClippingAction);
     createPlaneClippingAction->setCheckable(true);
     
@@ -105,61 +105,55 @@ void MainWindow::createBasicGeometries(JuggleLoader::BasicGeometries ge)
 
 void MainWindow::apply()
 {
-    if(currentClippingTool != C_NONE)
-    {
-        //clip  ??
-        
-        
-    }    
+
 }
 
-void MainWindow::createClipping(bool check, clippingTools ct)
+void MainWindow::createClipping(bool check)
 {        
     if(check)
     {
-        currentClippingTool = ct;
-
         
-        if(ct & C_PLANE)
-        {
-//            auto colors =
-//               vtkSmartPointer<vtkNamedColors>::New();
-//             vtkColor3d actorColor = colors->GetColor3d("AliceBlue");
-//             vtkColor3d  EdgeColour = colors->GetColor3d("SteelBlue");
-////             vtkColor3d BackgroundColour = colors->GetColor3d("Silver");
+        
+//        if(ct & C_PLANE)
+//        {
+////            auto colors =
+////               vtkSmartPointer<vtkNamedColors>::New();
+////             vtkColor3d actorColor = colors->GetColor3d("AliceBlue");
+////             vtkColor3d  EdgeColour = colors->GetColor3d("SteelBlue");
+//////             vtkColor3d BackgroundColour = colors->GetColor3d("Silver");
             
-//            vtkNew<vtkPlane> plane;
-//            plane->SetOrigin(.0,.0,.0);
-//            plane->SetNormal(.0,.0,1.0);
+////            vtkNew<vtkPlane> plane;
+////            plane->SetOrigin(.0,.0,.0);
+////            plane->SetNormal(.0,.0,1.0);
             
-//            vtkNew<vtkSampleFunction> sample;
-//            sample->SetImplicitFunction(plane);
-//            sample->SetModelBounds(-1.5, 1.5, -1.5, 1.5, -1.5, 1.5);
-//            sample->SetSampleDimensions(20, 20, 20);
-//            sample->ComputeNormalsOff();
+////            vtkNew<vtkSampleFunction> sample;
+////            sample->SetImplicitFunction(plane);
+////            sample->SetModelBounds(-1.5, 1.5, -1.5, 1.5, -1.5, 1.5);
+////            sample->SetSampleDimensions(20, 20, 20);
+////            sample->ComputeNormalsOff();
             
-//            vtkNew<vtkContourFilter> surface;
-//            surface->SetInputConnection(sample->GetOutputPort());
-//            surface->SetValue(0, 0.0);
+////            vtkNew<vtkContourFilter> surface;
+////            surface->SetInputConnection(sample->GetOutputPort());
+////            surface->SetValue(0, 0.0);
               
-//            vtkNew<vtkPolyDataMapper> mapper;
-//            mapper->SetInputConnection(surface->GetOutputPort());
-//            mapper->ScalarVisibilityOff();
+////            vtkNew<vtkPolyDataMapper> mapper;
+////            mapper->SetInputConnection(surface->GetOutputPort());
+////            mapper->ScalarVisibilityOff();
               
-//            vtkNew<vtkActor> actor;
-//            actor->SetMapper(mapper);
-//            actor->GetProperty()->EdgeVisibilityOn();
-//            actor->GetProperty()->SetColor(actorColor.GetData());
-//            actor->GetProperty()->SetEdgeColor(EdgeColour.GetData());
+////            vtkNew<vtkActor> actor;
+////            actor->SetMapper(mapper);
+////            actor->GetProperty()->EdgeVisibilityOn();
+////            actor->GetProperty()->SetColor(actorColor.GetData());
+////            actor->GetProperty()->SetEdgeColor(EdgeColour.GetData());
             
-//            ui->wt_MainView->renderWindow()->GetRenderers()->GetFirstRenderer()->AddActor(actor);
+////            ui->wt_MainView->renderWindow()->GetRenderers()->GetFirstRenderer()->AddActor(actor);
             
-        }
+//        }
         
     }
     else
     {
-        currentClippingTool = C_NONE;
+        
 
     }
 }

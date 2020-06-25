@@ -50,7 +50,10 @@ protected:
       const JuggleOptions& options, const std::string& file);
     
     JuggleOptionsParser Parser;    
-        
+    
+    void createSphere(vtkJuggleRenderer* ren);
+    void createCube(vtkJuggleRenderer* ren);
+    
 private:
     JuggleLoader(JuggleLoader const&) = delete;
     void operator=(JuggleLoader const&) = delete;

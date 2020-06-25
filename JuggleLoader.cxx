@@ -33,39 +33,23 @@ void JuggleLoader::LoadFile(vtkSmartPointer<vtkJuggleRenderer> ren, const std::s
 
 //----------------------------------------------------------------------------
 void JuggleLoader::createBasicGeometries(vtkJuggleRenderer* ren, BasicGeometries ge)
-{
-    vtkAlgorithmOutput* input = nullptr;
-    
+{ 
     switch (ge) 
     {
         case G_SPHERE:
         {
-            vtkNew<vtkSphereSource> sphere;
-            sphere->SetPhiResolution(30);
-            sphere->SetThetaResolution(30);
-            input = sphere->GetOutputPort();            
+            this->createSphere(ren);           
             break;
         }
         case G_CUBE:
         {
-            vtkNew<vtkCubeSource> cube;
-            input = cube->GetOutputPort();                        
+            this->createCube(ren);                  
             break;
         }
     }
     
-    if(input)
-    {
-        vtkNew<vtkPolyDataMapper> mapper;
-        mapper->SetInputConnection(input);
-    
-        vtkNew<vtkActor> actor;
-        actor->SetMapper(mapper);
-        
-        ren->AddActor(actor);
-//        ren->ResetCamera();
-//        ren->GetRenderWindow()->Render();
-    }
+    ren->ResetCamera();
+    ren->GetRenderWindow()->Render();
 }
 
 //----------------------------------------------------------------------------
@@ -144,3 +128,34 @@ vtkSmartPointer<vtkImporter> JuggleLoader::GetImporter(
 
 //  return importer;
 }
+
+//----------------------------------------------------------------------------
+void JuggleLoader::createSphere(vtkJuggleRenderer* ren)
+{
+    vtkNew<vtkSphereSource> sphere;
+    sphere->SetPhiResolution(30);
+    sphere->SetThetaResolution(30);      
+    
+    vtkNew<vtkPolyDataMapper> mapper;
+    mapper->SetInputConnection(sphere->GetOutputPort());
+
+    vtkNew<vtkActor> actor;
+    actor->SetMapper(mapper);
+    
+    ren->AddActor(actor);
+}
+
+//----------------------------------------------------------------------------
+void JuggleLoader::createCube(vtkJuggleRenderer* ren)
+{
+    vtkNew<vtkCubeSource> cube; 
+    
+    vtkNew<vtkPolyDataMapper> mapper;
+    mapper->SetInputConnection(cube->GetOutputPort());
+
+    vtkNew<vtkActor> actor;
+    actor->SetMapper(mapper);
+    
+    ren->AddActor(actor);
+}
+

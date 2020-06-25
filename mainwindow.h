@@ -43,10 +43,8 @@ private:
     void initToolBar();
     
     void createBasicGeometries(JuggleLoader::BasicGeometries ge);
-    
-    enum clippingTools{C_NONE, C_PLANE};
-    void createClipping(bool, clippingTools);
-    clippingTools currentClippingTool;    
+        
+    void createClipping(bool);     
     
     void shiftInteractorStyle(bool);
     

@@ -160,7 +160,8 @@ void vtkJuggleRenderer::InitializeCamera()
 //----------------------------------------------------------------------------
 void vtkJuggleRenderer::ResetCamera()
 {
-    vtkCamera* cam = this->GetActiveCamera();
-    cam->DeepCopy(this->InitialCamera);
-    cam->Modified();
+    this->Superclass::ResetCamera();
+//    vtkCamera* cam = this->GetActiveCamera();
+//    cam->DeepCopy(this->InitialCamera);
+//    cam->Modified();
 }
