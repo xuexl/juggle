@@ -18,7 +18,7 @@ struct JuggleOptions
     bool FullScreen = false;
     bool GeometryOnly = false;
     double CameraViewAngle;
-    std::vector<double> BackgroundColor = { 0.2, 0.2, 0.2 };
+    std::vector<double> BackgroundColor = { 0.5, 0.6, 0.7 };
     std::vector<double> CameraPosition;
     std::vector<double> CameraFocalPoint;
     std::vector<double> CameraViewUp;

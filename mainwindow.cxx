@@ -1,34 +1,17 @@
 ﻿#include "mainwindow.h"
 #include "./ui_mainwindow.h"
 
-#include<string>
+#include"maincommon.h"
+#include"JuggleClip.h"
 
+#include<string>
 
 #include <vtkGenericOpenGLRenderWindow.h>
 #include <vtkRenderer.h>
-#include <vtkPolyDataMapper.h>
-#include<vtkActor.h>
-
 #include <vtkNew.h>
-
-#include<vtkSphereSource.h>
-#include<vtkCubeSource.h>
-#include<vtkRendererCollection.h>
-#include<vtkInteractorStyleTrackballActor.h>
-#include<vtkInteractorStyleTrackballCamera.h>
-
-#include <vtkPlane.h>
-#include<vtkSampleFunction.h>
-#include<vtkContourFilter.h>
-#include<vtkProperty.h>
-
+#include <vtkInteractorStyleTrackballActor.h>
+#include <vtkInteractorStyleTrackballCamera.h>
 #include <vtkCommand.h>
-#include <vtkClipPolyData.h>
-
-#include <vtkAxesActor.h>
-#include <vtkOrientationMarkerWidget.h>
-
-#include"maincommon.h"
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -83,19 +66,18 @@ void MainWindow::initToolBar()
 }
 
 void MainWindow::initView()
-{       
+{   
     vtkNew<vtkGenericOpenGLRenderWindow> renderWindow;
     ui->wt_MainView->setRenderWindow(renderWindow);    
     
+    this->Renderer = vtkSmartPointer<vtkJuggleRenderer>::New();    
+    //The AddRenderer method of  RenderWindow must be in front of  setting propreties of Renderer.
+    renderWindow->AddRenderer(this->Renderer);    
+        
     std::string configFile = "";
     JuggleOptions options = Parser.GetOptionsFromConfigFile(configFile);
     options.Axis = true;
-    
-    this->Renderer = vtkSmartPointer<vtkJuggleRenderer>::New();
-    this->Renderer->Initialize(options);
-    
-    renderWindow->AddRenderer(this->Renderer);    
-    
+    this->Renderer->Initialize(options);            
 }
 
 void MainWindow::createBasicGeometries(JuggleLoader::BasicGeometries ge)
@@ -112,6 +94,10 @@ void MainWindow::createClipping(bool check)
 {        
     if(check)
     {
+        JuggleClip clip;
+        clip.ChangeClipTool(JuggleClip::C_PLANE);        
+        clip.Clip(this->Renderer);
+        
         
         
 //        if(ct & C_PLANE)

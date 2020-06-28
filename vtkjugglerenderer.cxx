@@ -39,8 +39,7 @@ void vtkJuggleRenderer::Initialize(const JuggleOptions& options)
     
     this->Options = options;        
     this->AxisVisible = this->Options.Axis;
-    
-    
+        
     this->SetBackground(options.BackgroundColor.data());
     
     this->InitializeCamera();    
@@ -106,7 +105,7 @@ void vtkJuggleRenderer::ShowAxis(bool show)
     this->AxisWidget = vtkSmartPointer<vtkOrientationMarkerWidget>::New();
     this->AxisWidget->SetOrientationMarker(axes);
     this->AxisWidget->SetInteractor(this->RenderWindow->GetInteractor());
-    this->AxisWidget->SetViewport(0.85, 0.0, 1.0, 0.15);
+    this->AxisWidget->SetViewport(0.0, 0.0, 0.1, 0.1);
     this->AxisWidget->On();
     this->AxisWidget->InteractiveOff();
     this->AxisWidget->SetKeyPressActivation(false);

@@ -28,9 +28,16 @@ public:
     void ChangeClipTool(ClipTools ct);
     
     /**
-     * apply the clip
+     * hide the actors that are already there, 
+     * show the actors that are created by clipping
     */
-    void Apply(vtkJuggleRenderer* ren);
+    void Clip(vtkJuggleRenderer* ren);
+        
+    /**
+     * remove the actors that are created by clipping, 
+     * and show the actors that are already there.
+    */
+    void Restore(vtkJuggleRenderer* ren);
     
     JuggleClip();
     ~JuggleClip();

@@ -7,6 +7,8 @@
 #include<vtkDataSetMapper.h>
 #include<vtkNew.h>
 #include<vtkActor.h>
+#include<vtkProperty.h>
+#include<vtkRenderWindow.h>
 
 
 //-----------------------------------------------------
@@ -20,48 +22,62 @@ void JuggleClip::ChangeClipTool(ClipTools ct)
 {    
 //    CurrentClipTool = ct;
     
-//    switch (ct) 
-//    {
-//        case C_PLANE:
-//        {    
-//            vtkNew<vtkPlane> plane;
+    switch (ct) 
+    {
+        case C_PLANE:
+        {    
+            vtkNew<vtkPlane> plane;
         
-//            double origin[] = {.0,.0,.0};
-//            double normal[] = {1.0, -1.0, -1.0};
+            double origin[] = {.0,.0,.0};
+            double normal[] = {1.0, -1.0, -1.0};
             
-//            plane->SetOrigin(origin);
-//            plane->SetNormal(normal);
+            plane->SetOrigin(origin);
+            plane->SetNormal(normal);
             
-//            ImplicitFunction = plane;            
-//            break;
-//        }
+            ImplicitFunction = plane;            
+            break;
+        }
         
-//    }
+    }
     
 }
 
 //-----------------------------------------------------
-void JuggleClip::Apply(vtkJuggleRenderer* ren)
+void JuggleClip::Clip(vtkJuggleRenderer* ren)
 {
-//    auto actors = ren->GetActors();
-//    actors->InitTraversal();
+    auto actors = ren->GetActors();
+    actors->InitTraversal();
     
-//    for(int i=0; i<actors->GetNumberOfItems(); ++i)
-//    {
-//        vtkNew<vtkClipPolyData> clipper;    
-//        clipper->SetInputData(actors->GetNextActor()->GetMapper()->GetInput());
-//        clipper->SetClipFunction(this->ImplicitFunction);
-//        clipper->SetValue(0);
-//        clipper->Update();
+    for(int i=0; i<actors->GetNumberOfItems(); ++i)
+    {
+        auto actor = actors->GetNextActor();
         
-//        vtkNew<vtkDataSetMapper> clipMapper;    
-//        clipMapper->SetInputData(clipper->GetOutput());
+        vtkNew<vtkClipPolyData> clipper;    
+        clipper->SetInputData(actor->GetMapper()->GetInput());
+        clipper->SetClipFunction(this->ImplicitFunction);
+        clipper->SetValue(0);
+        clipper->Update();
         
-//        vtkNew<vtkActor> clipActor;
-//        clipActor->SetMapper(clipMapper); 
+        vtkNew<vtkDataSetMapper> clipMapper;    
+        clipMapper->SetInputData(clipper->GetOutput());
+//        clipMapper->SetScalarVisibility(false);
         
-//        ren->AddActor(clipActor);
-//    }
+        vtkNew<vtkActor> clipActor;
+        clipActor->SetMapper(clipMapper); 
+        clipActor->GetProperty()->SetOpacity(.6);
+        
+        ren->AddActor(clipActor);
+        
+        actor->SetVisibility(false);
+    }
+    
+    ren->GetRenderWindow()->Render();
+}
+
+//-----------------------------------------------------
+void Restore(vtkJuggleRenderer* ren)
+{
+    
 }
 
 //-----------------------------------------------------
