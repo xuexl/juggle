@@ -2,6 +2,7 @@
 
 #include "JuggleLog.h"
 #include "JuggleOptions.h"
+#include"vtkJuggleActor.h"
 
 #include <vtk3DSImporter.h>
 #include <vtkOBJImporter.h>
@@ -139,7 +140,7 @@ void JuggleLoader::createSphere(vtkJuggleRenderer* ren)
     vtkNew<vtkPolyDataMapper> mapper;
     mapper->SetInputConnection(sphere->GetOutputPort());
 
-    vtkNew<vtkActor> actor;
+    vtkNew<vtkJuggleActor> actor;
     actor->SetMapper(mapper);
     
     ren->AddActor(actor);
@@ -153,7 +154,7 @@ void JuggleLoader::createCube(vtkJuggleRenderer* ren)
     vtkNew<vtkPolyDataMapper> mapper;
     mapper->SetInputConnection(cube->GetOutputPort());
 
-    vtkNew<vtkActor> actor;
+    vtkNew<vtkJuggleActor> actor;
     actor->SetMapper(mapper);
     
     ren->AddActor(actor);

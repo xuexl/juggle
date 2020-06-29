@@ -3,8 +3,11 @@
  * @brief   clip class  
 */
 
+
 #ifndef JUGGLECLIP_H
 #define JUGGLECLIP_H
+
+#include<string>
 
 #include<vtkSmartPointer.h>
 #include<vtkImplicitFunction.h>
@@ -45,7 +48,7 @@ public:
 protected:
 //    ClipTools CurrentClipTool = C_PLANE;
     vtkSmartPointer<vtkImplicitFunction> ImplicitFunction;
-    
+    const std::string ClipActorTag = "CLIP";
     
     void CreatePlane();
     

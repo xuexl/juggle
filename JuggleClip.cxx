@@ -1,12 +1,12 @@
 ﻿#include "JuggleClip.h"
 
 #include"vtkjugglerenderer.h"
+#include"vtkJuggleActor.h"
 
 #include<vtkPlane.h>
 #include<vtkClipPolyData.h>
 #include<vtkDataSetMapper.h>
 #include<vtkNew.h>
-#include<vtkActor.h>
 #include<vtkProperty.h>
 #include<vtkRenderWindow.h>
 
@@ -62,9 +62,10 @@ void JuggleClip::Clip(vtkJuggleRenderer* ren)
         clipMapper->SetInputData(clipper->GetOutput());
 //        clipMapper->SetScalarVisibility(false);
         
-        vtkNew<vtkActor> clipActor;
+        vtkNew<vtkJuggleActor> clipActor;
         clipActor->SetMapper(clipMapper); 
         clipActor->GetProperty()->SetOpacity(.6);
+        clipActor->SetTag(this->ClipActorTag);
         
         ren->AddActor(clipActor);
         
@@ -75,9 +76,25 @@ void JuggleClip::Clip(vtkJuggleRenderer* ren)
 }
 
 //-----------------------------------------------------
-void Restore(vtkJuggleRenderer* ren)
+void JuggleClip::Restore(vtkJuggleRenderer* ren)
 {
+    auto actors = ren->GetActors();
+    actors->InitTraversal();
     
+    for(int i=0; i<actors->GetNumberOfItems(); ++i)
+    {
+        auto actor = reinterpret_cast<vtkJuggleActor*>(actors->GetNextActor());
+        if(actor->GetTag() == this->ClipActorTag)
+        {
+            ren->RemoveActor(actor);            
+        }
+        else
+        {
+            actor->SetVisibility(true);
+        }        
+    }
+    
+    ren->GetRenderWindow()->Render();
 }
 
 //-----------------------------------------------------
