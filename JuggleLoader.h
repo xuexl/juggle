@@ -29,7 +29,8 @@ public:
     enum BasicGeometries
     {
         G_SPHERE, 
-        G_CUBE
+        G_CUBE,
+        G_PLANE
     };
     
     /**
@@ -53,6 +54,7 @@ protected:
     
     void createSphere(vtkJuggleRenderer* ren);
     void createCube(vtkJuggleRenderer* ren);
+    void createPlane(vtkJuggleRenderer* ren);
     
 private:
     JuggleLoader(JuggleLoader const&) = delete;

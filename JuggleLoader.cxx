@@ -17,6 +17,10 @@
 #include<vtkPolyDataMapper.h>
 #include<vtkSphereSource.h>
 #include<vtkCubeSource.h>
+#include<vtkPlaneSource.h>
+
+#include<vtkLinearExtrusionFilter.h>
+#include<vtkProperty.h>
 
 
 //----------------------------------------------------------------------------
@@ -45,6 +49,11 @@ void JuggleLoader::createBasicGeometries(vtkJuggleRenderer* ren, BasicGeometries
         case G_CUBE:
         {
             this->createCube(ren);                  
+            break;
+        }
+        case G_PLANE:
+        {
+            this->createPlane(ren);                  
             break;
         }
     }
@@ -160,3 +169,25 @@ void JuggleLoader::createCube(vtkJuggleRenderer* ren)
     ren->AddActor(actor);
 }
 
+//----------------------------------------------------------------------------
+void JuggleLoader::createPlane(vtkJuggleRenderer* ren)
+{
+    vtkNew<vtkPlaneSource> plane; 
+    
+//    vtkNew<vtkLinearExtrusionFilter> extrude;
+//    extrude->SetInputConnection(plane->GetOutputPort());
+//    extrude->SetExtrusionType(VTK_VECTOR_EXTRUSION);
+//    extrude->SetVector(.0,.0,1.0);
+//    extrude->SetScaleFactor(2);
+    
+    vtkNew<vtkPolyDataMapper> mapper;
+    mapper->SetInputConnection(plane->GetOutputPort());
+
+    vtkNew<vtkJuggleActor> actor;
+    actor->SetMapper(mapper);
+    
+//    actor->GetProperty()->SetOpacity(.5);
+//    actor->GetProperty()->SetColor(.1,.2,.3);
+    
+    ren->AddActor(actor);
+}

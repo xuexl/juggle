@@ -33,6 +33,7 @@ private:
     QToolBar *basicGeometriesToolBar;
     QAction *createSphereAction;
     QAction *createCubeAction;
+    QAction *createPlaneAction;
     
     QToolBar *implicitFunctionsToolBar;
     QAction *createPlaneClippingAction;

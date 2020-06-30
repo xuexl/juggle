@@ -47,6 +47,10 @@ void MainWindow::initToolBar()
     connect(createCubeAction, &QAction::triggered, [this](){ createBasicGeometries(JuggleLoader::G_CUBE); });        
     basicGeometriesToolBar->addAction(createCubeAction);
     
+    createPlaneAction = new QAction(QIcon("://images/toolbar/plane.png"), tr(u8"创建平面"), this);
+    connect(createPlaneAction, &QAction::triggered, [this](){ createBasicGeometries(JuggleLoader::G_PLANE); });        
+    basicGeometriesToolBar->addAction(createPlaneAction);
+    
     //
     implicitFunctionsToolBar = addToolBar(tr(u8"切割工具"));
     
@@ -86,8 +90,17 @@ void MainWindow::createBasicGeometries(JuggleLoader::BasicGeometries ge)
 }
 
 void MainWindow::apply()
-{
-
+{    
+//    auto actors = this->Renderer->GetActors();
+//    actors->InitTraversal();
+    
+//    for(int i=0; i<actors->GetNumberOfItems(); ++i)
+//    {        
+//        auto actor = actors->GetNextActor();
+        
+          
+//    }
+        
 }
 
 void MainWindow::createClipping(bool check)

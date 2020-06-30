@@ -92,6 +92,9 @@ void JuggleClip::Restore(vtkJuggleRenderer* ren)
         {
             actor->SetVisibility(true);
         }        
+        
+        
+        
     }
     
     ren->GetRenderWindow()->Render();
