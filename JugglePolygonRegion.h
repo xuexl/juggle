@@ -14,8 +14,13 @@ public:
     
     /**
      * create a polygon region via mouse.
-     * 
+     *  create one point at the clicked position.
+     *  link the points one by one to create one polygon.
+     *  if the position of clicking has existed one point then create none.
     */
+    
+    void AddPosition(int *pos);
+    
     
     /**
      * create extraction via vtkLinearExtrusionFilter

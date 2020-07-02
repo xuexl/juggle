@@ -5,5 +5,6 @@
         <file>images/toolbar/rect.png</file>
         <file>images/toolbar/shift.png</file>
         <file>images/toolbar/plane.png</file>
+        <file>images/toolbar/polygon.png</file>
     </qresource>
 </RCC>

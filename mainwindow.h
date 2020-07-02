@@ -6,11 +6,13 @@
 
 #include<memory>
 
-#include<vtkSmartPointer.h>
-
 #include"maintreewidget.h"
 #include"vtkjugglerenderer.h"
 #include"JuggleLoader.h"
+//#include "JugglePolygonRegion.h"
+
+#include<vtkSmartPointer.h>
+
 
 
 QT_BEGIN_NAMESPACE
@@ -40,14 +42,15 @@ private:
         
     QToolBar *modelInteractorToolBar;
     QAction *shiftInteractorStyleAction;    
+    QAction *CreatePolygonRegionAction;    
     
     void initToolBar();
     
     void createBasicGeometries(JuggleLoader::BasicGeometries ge);
         
-    void createClipping(bool);     
-    
+    void createClipping(bool);         
     void shiftInteractorStyle(bool);
+    void CreatePolygonRegion(bool);
     
 private:
     void initView();
@@ -57,6 +60,8 @@ private:
     vtkSmartPointer<vtkJuggleRenderer> Renderer;
     JuggleOptionsParser Parser;
     std::unique_ptr<JuggleLoader> loader;
+    
+//    JugglePolygonRegion *PolygonRegion;
     
 private:
     MainWindow(MainWindow const&) = delete;

@@ -3,6 +3,7 @@
 
 #include"maincommon.h"
 #include"JuggleClip.h"
+#include"vtkJuggleInteractorStyle.h"
 
 #include<string>
 
@@ -67,12 +68,20 @@ void MainWindow::initToolBar()
     modelInteractorToolBar->addAction(shiftInteractorStyleAction);
     shiftInteractorStyleAction->setCheckable(true);
         
+    CreatePolygonRegionAction = new QAction(QIcon("://images/toolbar/polygon.png"), tr(u8"绘制多边形区域"), this);
+    connect(CreatePolygonRegionAction, &QAction::triggered, [this](bool check){ CreatePolygonRegion(check); });
+    modelInteractorToolBar->addAction(CreatePolygonRegionAction);
+    CreatePolygonRegionAction->setCheckable(true);
+    
 }
 
 void MainWindow::initView()
 {   
-    vtkNew<vtkGenericOpenGLRenderWindow> renderWindow;
+    vtkNew<vtkGenericOpenGLRenderWindow> renderWindow;        
     ui->wt_MainView->setRenderWindow(renderWindow);    
+    
+    vtkNew<vtkJuggleInteractorStyle> style;
+    renderWindow->GetInteractor()->SetInteractorStyle(style);
     
     this->Renderer = vtkSmartPointer<vtkJuggleRenderer>::New();    
     //The AddRenderer method of  RenderWindow must be in front of  setting propreties of Renderer.
@@ -172,3 +181,17 @@ void MainWindow::shiftInteractorStyle(bool check)
     
 }
 
+void MainWindow::CreatePolygonRegion(bool check)
+{
+    if(check)
+    {
+        vtkNew<vtkJuggleInteractorStyle> st;
+        st->SafeDownCast(this->Renderer->GetRenderWindow()->GetInteractor()->GetInteractorStyle());
+        st->SetStatus(vtkJuggleInteractorStyle::I_POLYGONREGION);
+        
+    }
+    else
+    {
+        
+    }
+}
