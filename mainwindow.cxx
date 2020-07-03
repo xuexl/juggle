@@ -10,8 +10,12 @@
 #include <vtkGenericOpenGLRenderWindow.h>
 #include <vtkRenderer.h>
 #include <vtkNew.h>
-#include <vtkInteractorStyleTrackballActor.h>
-#include <vtkInteractorStyleTrackballCamera.h>
+
+//#include <vtkInteractorStyleTrackballActor.h>
+//#include <vtkInteractorStyleTrackballCamera.h>
+#include"vtkJuggleInteractorStyleActor.h"
+#include"vtkJuggleInteractorStyle.h"
+
 #include <vtkCommand.h>
 
 
@@ -82,6 +86,7 @@ void MainWindow::initView()
     
     vtkNew<vtkJuggleInteractorStyle> style;
     renderWindow->GetInteractor()->SetInteractorStyle(style);
+    
     
     this->Renderer = vtkSmartPointer<vtkJuggleRenderer>::New();    
     //The AddRenderer method of  RenderWindow must be in front of  setting propreties of Renderer.
@@ -170,12 +175,12 @@ void MainWindow::shiftInteractorStyle(bool check)
 {
     if(check)
     {
-        vtkNew<vtkInteractorStyleTrackballActor> interactor;
+        vtkNew<vtkJuggleInteractorStyleActor> interactor;
         ui->wt_MainView->renderWindow()->GetInteractor()->SetInteractorStyle(interactor);
     }
     else
     {
-        vtkNew<vtkInteractorStyleTrackballCamera > interactor;
+        vtkNew<vtkJuggleInteractorStyle> interactor;
         ui->wt_MainView->renderWindow()->GetInteractor()->SetInteractorStyle(interactor);
     }
     

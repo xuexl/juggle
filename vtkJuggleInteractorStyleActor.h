@@ -15,6 +15,7 @@ public:
     static vtkJuggleInteractorStyleActor* New();
     vtkTypeMacro(vtkJuggleInteractorStyleActor, vtkInteractorStyleTrackballActor);
     
+    void OnLeftButtonUp() override;
     
 protected:    
     vtkJuggleInteractorStyleActor();

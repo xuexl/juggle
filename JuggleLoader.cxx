@@ -165,6 +165,9 @@ void JuggleLoader::createCube(vtkJuggleRenderer* ren)
 
     vtkNew<vtkJuggleActor> actor;
     actor->SetMapper(mapper);
+//    actor->GetProperty()->SetInterpolationToGouraud();
+//    actor->GetProperty()->SetRepresentationToSurface();
+//    actor->GetProperty()->SetRepresentationToWireframe();
     
     ren->AddActor(actor);
 }
